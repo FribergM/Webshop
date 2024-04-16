@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<style>
+    body{
+        background-color:#33475b;
+        color:lightgray;
+    }
+    .header a{
+        color: lightgray;
+        text-decoration: none;
+    }
+    .toolbar{
+        display:flex;
+        justify-content: space-between;
+    }
+    .toolbar-item{
+        float:right;
+        margin-right: 20px;
+    }
+    .toolbar-shop-path{
+        float:left;
+        margin-left: 20px;
+    }
+    .toolbar a{
+        /*color:lightgray;*/
+        /*text-decoration: none;*/
+    }
+    .toolbar a:visited{
+        /*color:lightgray;*/
+        /*text-decoration: none;*/
+    }
+</style>
+<head>
+    <meta charset="UTF-8">
+    <title>Shopping Cart</title>
+</head>
+<body>
+    <div class="header">
+    <a href="/"><h2 style="text-align: center">Måns' Webshop!</h2></a>
+    <hr/>
+    <div class="toolbar" th:unless="${loggedIn}">
+            <span class="toolbar-shop-path">
+                <a href="/products">Products</a>
+            </span>
+
+        <span class="toolbar-item">
+            <a href="/cart">Shopping Cart</a>
+            <span>|</span>
+            <a href="/login">Login</a>
+            <span>|</span>
+            <a href="/register">Register</a>
+        </span>
+    </div>
+    <div class="toolbar" th:if="${loggedIn}">
+            <span class="toolbar-shop-path">
+                <a href="/products">Products</a>
+            </span>
+        <span class="toolbar-item">
+            <a href="/cart">Shopping Cart</a>
+            <span>|</span>
+            <a href="/logout">Logout</a>
+        </span>
+    </div>
+    <hr/>
+</div>
+    <h1>Shopping cart!</h1>
+</body>
+</html>

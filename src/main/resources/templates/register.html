@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="/css/styles.css">
+    <meta charset="UTF-8">
+    <title>Register</title>
+</head>
+<body>
+<div class="header">
+    <a href="/"><h2 style="text-align: center">Måns' Webshop!</h2></a>
+    <hr/>
+    <div class="toolbar" th:unless="${loggedIn}">
+                <span class="toolbar-shop-path">
+                    <a href="/products">Products</a>
+                </span>
+
+        <span class="toolbar-item">
+                <a href="/cart">Shopping Cart</a>
+                <span>|</span>
+                <a href="/login">Login</a>
+                <span>|</span>
+                <a href="/register">Register</a>
+            </span>
+    </div>
+    <div class="toolbar" th:if="${loggedIn}">
+                <span class="toolbar-shop-path">
+                    <a href="/products">Products</a>
+                </span>
+        <span class="toolbar-item">
+                <a href="/cart">Shopping Cart</a>
+                <span>|</span>
+                <a href="/logout">Logout</a>
+            </span>
+    </div>
+    <hr/>
+</div>
+<div class="content-register">
+    <div class="regForm">
+        <form th:action="@{/register}" method="post">
+            <h2>Account registration</h2>
+            <div>
+                <input type="text" name="username" placeholder="Enter username" size="15" maxlength="20"/>
+            </div>
+            <div>
+                <input type="text" name="password" placeholder="Enter password" size="15" maxlength="20"/>
+            </div>
+            <div>
+                <input type="text" name="passwordRepeat" placeholder="Repeat password" size="15" maxlength="20"/>
+            </div><br/>
+
+            <input type="Submit" value="Register"/>
+        </form>
+        <span th:text="${regMessage}"></span>
+    </div>
+    <div class="regInfo">
+        <ul>
+            <li>Credentials must be 5-20 characters.</li>
+            <li>Username can only contain letters and numbers.</li>
+            <li>Passwords can only contain letters, numbers and symbols(!?&%@) </li>
+        </ul>
+    </div>
+
+</div>
+</body>
+</html>

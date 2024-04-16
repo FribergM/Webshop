@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="/css/styles.css">
+    <meta charset="UTF-8">
+    <title>Måns' Webshop - Products</title>
+</head>
+<body>
+    <div class="header">
+    <a href="/"><h2 style="text-align: center">Måns' Webshop!</h2></a>
+    <hr/>
+    <div class="toolbar" th:unless="${loggedIn}">
+            <span class="toolbar-shop-path">
+                <a href="/products">Products</a>
+            </span>
+
+        <span class="toolbar-item">
+            <a href="/cart">Shopping Cart</a>
+            <span>|</span>
+            <a href="/login">Login</a>
+            <span>|</span>
+            <a href="/register">Register</a>
+        </span>
+    </div>
+    <div class="toolbar" th:if="${loggedIn}">
+            <span class="toolbar-shop-path">
+                <a href="/products">Products</a>
+            </span>
+        <span class="toolbar-item">
+            <a href="/cart">Shopping Cart</a>
+            <span>|</span>
+            <a href="/logout">Logout</a>
+        </span>
+    </div>
+    <hr/>
+</div>
+</body>
+</html>

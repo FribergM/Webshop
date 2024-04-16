@@ -1,0 +1,27 @@
+body{
+    background-color:#33475b;
+    color:lightgray;
+}
+.header a{
+    color: lightgray;
+    text-decoration: none;
+}
+.toolbar{
+    display:flex;
+    justify-content: space-between;
+}
+.toolbar-item{
+    float:right;
+    margin-right: 20px;
+}
+.toolbar-shop-path{
+    float:left;
+    margin-left: 20px;
+}
+.content-register{
+    display:flex;
+    justify-content: left;
+}
+.regInfo{
+    margin-top: 50px;
+}

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="/css/styles.css">
+    <meta charset="UTF-8">
+    <title>Login</title>
+</head>
+<body>
+    <div class="header">
+        <a href="/"><h2 style="text-align: center">Måns' Webshop!</h2></a>
+        <hr/>
+        <div class="toolbar" th:unless="${loggedIn}">
+                <span class="toolbar-shop-path">
+                    <a href="/products">Products</a>
+                </span>
+
+            <span class="toolbar-item">
+                <a href="/cart">Shopping Cart</a>
+                <span>|</span>
+                <a href="/login">Login</a>
+                <span>|</span>
+                <a href="/register">Register</a>
+            </span>
+        </div>
+        <div class="toolbar" th:if="${loggedIn}">
+                <span class="toolbar-shop-path">
+                    <a href="/products">Products</a>
+                </span>
+            <span class="toolbar-item">
+                <a href="/cart">Shopping Cart</a>
+                <span>|</span>
+                <a href="/logout">Logout</a>
+            </span>
+        </div>
+        <hr/>
+    </div>
+    <div class="content-login">
+        <form th:action="@{/login}" method="post">
+            <h2>Account login</h2>
+            <div>
+                <input type="text" name="username" placeholder="Enter username" size="15" maxlength="20"/>
+            </div>
+            <div>
+                <input type="text" name="password" placeholder="Enter password" size="15" maxlength="20"/>
+            </div><br/>
+
+            <input type="Submit" value="Sign in"/>
+        </form>
+        <span th:text="${loginMessage}"></span>
+    </div>
+</body>
+</html>
