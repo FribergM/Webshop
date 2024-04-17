@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
     <link rel="stylesheet" href="/css/styles.css">
     <meta charset="UTF-8">
-    <title>Login</title>
+    <title th:text="${productTitle}"></title>
 </head>
 <body>
 <div class="header">
@@ -37,16 +37,19 @@
     </div>
     <hr/>
 </div>
-<div class="content-login">
-    <form th:action="@{/login}" method="post">
-        <h2>Account login</h2>
-        <input type="text" name="username" placeholder="Enter username" size="15" maxlength="20"/><br/>
+<div class="content-productDetails">
+    <div th:if="${productFound}">
+        <h2 class="product-title" th:text="${product.getProductName()}"></h2>
+        <ul>
+            <li th:text="${'Price: $' + product.getPrice}"></li>
+            <li th:text="${'In stock: ' + product.getInStock}"></li>
+        </ul>
+    </div>
+    <div th:unless="${productFound}">
+        <h2 th:text="@{'No Product Found.'}"></h2>
+    </div>
 
-        <input type="text" name="password" placeholder="Enter password" size="15" maxlength="20"/><br/>
-        <br/>
-        <input type="Submit" value="Sign in"/>
-    </form>
-    <span th:text="${loginMessage}"></span>
+
 </div>
 </body>
 </html>

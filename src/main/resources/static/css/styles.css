@@ -9,14 +9,19 @@ body{
 .toolbar{
     display:flex;
     justify-content: space-between;
+    padding: 1px;
 }
 .toolbar-item{
+    padding-top: 1px;
     float:right;
     margin-right: 20px;
 }
-.toolbar-shop-path{
+.toolbar-navigation{
     float:left;
     margin-left: 20px;
+}
+.toolbar-search{
+    display: inline-block;
 }
 .content-register{
     display:flex;
@@ -24,4 +29,16 @@ body{
 }
 .regInfo{
     margin-top: 50px;
+}
+.catalog-lists a{
+    color: lightgray;
+    font-size: 20px;
+
+    text-decoration: none;
+}
+.catalog-list-item{
+    padding-bottom: 10px;
+}
+.product-title{
+    margin-left: 25px;
 }

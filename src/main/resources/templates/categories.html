@@ -3,7 +3,7 @@
 <head>
     <link rel="stylesheet" href="/css/styles.css">
     <meta charset="UTF-8">
-    <title>Login</title>
+    <title>Måns' Webshop</title>
 </head>
 <body>
 <div class="header">
@@ -37,16 +37,14 @@
     </div>
     <hr/>
 </div>
-<div class="content-login">
-    <form th:action="@{/login}" method="post">
-        <h2>Account login</h2>
-        <input type="text" name="username" placeholder="Enter username" size="15" maxlength="20"/><br/>
-
-        <input type="text" name="password" placeholder="Enter password" size="15" maxlength="20"/><br/>
-        <br/>
-        <input type="Submit" value="Sign in"/>
-    </form>
-    <span th:text="${loginMessage}"></span>
+<div class="content-categories">
+    <h2>Categories</h2>
+    <ul class="catalog-lists">
+        <li class="catalog-list-item" th:each="category : ${categories}">
+            <a th:href="@{'/category/' + ${category.getCategoryName().toLowerCase()}}"
+               th:text="${category.getCategoryName()}"/>
+        </li>
+    </ul>
 </div>
 </body>
 </html>

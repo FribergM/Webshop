@@ -9,28 +9,31 @@
 <div class="header">
     <a href="/"><h2 style="text-align: center">Måns' Webshop!</h2></a>
     <hr/>
-    <div class="toolbar" th:unless="${loggedIn}">
-                <span class="toolbar-shop-path">
-                    <a href="/products">Products</a>
-                </span>
+    <div class="toolbar">
+        <div class="toolbar-navigation">
+            <span>
+                <a href="/categories">Catalog</a>
+                <span>|</span>
+            </span>
+            <form class="toolbar-search" action="/search" method="post">
+                <input type="text" name="search" placeholder="Search" size="15" maxlength="20"/>
+                <button type="submit">Search</button>
+            </form>
+        </div>
 
-        <span class="toolbar-item">
-                <a href="/cart">Shopping Cart</a>
-                <span>|</span>
-                <a href="/login">Login</a>
-                <span>|</span>
-                <a href="/register">Register</a>
-            </span>
-    </div>
-    <div class="toolbar" th:if="${loggedIn}">
-                <span class="toolbar-shop-path">
-                    <a href="/products">Products</a>
-                </span>
-        <span class="toolbar-item">
-                <a href="/cart">Shopping Cart</a>
-                <span>|</span>
-                <a href="/logout">Logout</a>
-            </span>
+        <span class="toolbar-item" th:unless="${loggedIn}">
+            <a href="/cart">Shopping Cart</a>
+            <span>|</span>
+            <a href="/login">Login</a>
+            <span>|</span>
+            <a href="/register">Register</a>
+        </span>
+
+        <span class="toolbar-item" th:if="${loggedIn}">
+            <a href="/cart">Shopping Cart</a>
+            <span>|</span>
+            <a href="/logout">Logout</a>
+        </span>
     </div>
     <hr/>
 </div>
@@ -46,7 +49,8 @@
             </div>
             <div>
                 <input type="text" name="passwordRepeat" placeholder="Repeat password" size="15" maxlength="20"/>
-            </div><br/>
+            </div>
+            <br/>
 
             <input type="Submit" value="Register"/>
         </form>
@@ -56,7 +60,7 @@
         <ul>
             <li>Credentials must be 5-20 characters.</li>
             <li>Username can only contain letters and numbers.</li>
-            <li>Passwords can only contain letters, numbers and symbols(!?&%@) </li>
+            <li>Passwords can only contain letters, numbers and symbols(!?&%@)</li>
         </ul>
     </div>
 
