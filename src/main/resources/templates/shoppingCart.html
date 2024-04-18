@@ -1,42 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-<style>
-    body {
-        background-color: #33475b;
-        color: lightgray;
-    }
-
-    .header a {
-        color: lightgray;
-        text-decoration: none;
-    }
-
-    .toolbar {
-        display: flex;
-        justify-content: space-between;
-    }
-
-    .toolbar-item {
-        float: right;
-        margin-right: 20px;
-    }
-
-    .toolbar-shop-path {
-        float: left;
-        margin-left: 20px;
-    }
-
-    .toolbar a {
-        /*color:lightgray;*/
-        /*text-decoration: none;*/
-    }
-
-    .toolbar a:visited {
-        /*color:lightgray;*/
-        /*text-decoration: none;*/
-    }
-</style>
 <head>
+    <link rel="stylesheet" href="/css/styles.css">
     <meta charset="UTF-8">
     <title>Shopping Cart</title>
 </head>
@@ -57,7 +22,7 @@
         </div>
 
         <span class="toolbar-item" th:unless="${loggedIn}">
-            <a href="/cart">Shopping Cart</a>
+            <a href="/cart" th:text="${'ShoppingCart(' + cartQuant + ')'}"></a>
             <span>|</span>
             <a href="/login">Login</a>
             <span>|</span>
@@ -65,13 +30,48 @@
         </span>
 
         <span class="toolbar-item" th:if="${loggedIn}">
-            <a href="/cart">Shopping Cart</a>
+            <a href="/cart" th:text="${'ShoppingCart(' + cartQuant + ')'}"></a>
             <span>|</span>
             <a href="/logout">Logout</a>
         </span>
     </div>
     <hr/>
 </div>
-<h2>Shopping cart</h2>
+<div class="content">
+    <div class="content-cart">
+        <h2 class="page-title">Shopping cart</h2>
+        <ul th:unless="${cartIsEmpty}">
+            <li th:each="item,itemIndex : ${cartItems}">
+                <form th:action="@{/changeQuantity}" method="post">
+                    <input type="hidden" name="itemId" th:value="${itemIndex.index}">
+                    <div class="cart-item">
+                        <div class="product-name">
+                            <span th:text="${item.getProductName()}"></span>
+                        </div>
+                        <div class="price-and-buttons">
+                            <div class="product-price">
+                                <span th:text="${'- $' + item.getCombinedPrice()}"></span>
+                            </div>
+                            <div class="button-row">
+                                <span><button type="submit" name="action" value="decrease">-</button></span>
+                                <span th:text="${item.getQuantity()}"></span>
+                                <button th:if="${item.getQuantity() >= item.getProductStock()}"
+                                        type="submit" name="action" value="increase" disabled>+</button>
+                                <button th:unless="${item.getQuantity() >= item.getProductStock()}"
+                                        type="submit" name="action" value="increase">+</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </li>
+        </ul>
+        <p th:if="${cartIsEmpty}" class="cart-empty">Cart is empty!</p>
+        <div class="total-price-and-order">
+            <span th:text="${'Total price: $' + totalPrice}"></span><br/>
+            <button th:if="${totalPrice > 0}" type="submit" name="placeOrder" th:value="true">Place order</button>
+            <button th:unless="${totalPrice > 0}" type="submit" name="placeOrder" th:value="true" disabled>Checkout</button>
+        </div>
+    </div>
+</div>
 </body>
 </html>

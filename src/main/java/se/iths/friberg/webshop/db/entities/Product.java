@@ -22,18 +22,18 @@ public class Product{
     private Category category;
     @Column(nullable = false)
     private double price;
-    @Column(nullable = false)
-    private int inStock;
+    @Column(name="in_stock", nullable = false)
+    private int stock;
 
     public Product(){
 
     }
 
-    public Product(String productName, Category category, double price, int inStock){
+    public Product(String productName, Category category, double price, int stock){
         this.productName = productName;
         this.category = category;
         this.price = price;
-        this.inStock = inStock;
+        this.stock = stock;
     }
 
     public Long getId(){
@@ -68,11 +68,11 @@ public class Product{
         this.price = price;
     }
 
-    public int getInStock(){
-        return inStock;
+    public int getStock(){
+        return stock;
     }
 
-    public void setInStock(int inStock){
-        this.inStock = inStock;
+    public void setStock(int stock){
+        this.stock = stock;
     }
 }

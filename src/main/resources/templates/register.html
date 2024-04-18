@@ -22,7 +22,7 @@
         </div>
 
         <span class="toolbar-item" th:unless="${loggedIn}">
-            <a href="/cart">Shopping Cart</a>
+            <a href="/cart" th:text="${'ShoppingCart(' + cartQuant + ')'}"></a>
             <span>|</span>
             <a href="/login">Login</a>
             <span>|</span>
@@ -30,40 +30,43 @@
         </span>
 
         <span class="toolbar-item" th:if="${loggedIn}">
-            <a href="/cart">Shopping Cart</a>
+            <a href="/cart" th:text="${'ShoppingCart(' + cartQuant + ')'}"></a>
             <span>|</span>
             <a href="/logout">Logout</a>
         </span>
     </div>
     <hr/>
 </div>
-<div class="content-register">
-    <div class="regForm">
-        <form th:action="@{/register}" method="post">
-            <h2>Account registration</h2>
-            <div>
-                <input type="text" name="username" placeholder="Enter username" size="15" maxlength="20"/>
-            </div>
-            <div>
-                <input type="text" name="password" placeholder="Enter password" size="15" maxlength="20"/>
-            </div>
-            <div>
-                <input type="text" name="passwordRepeat" placeholder="Repeat password" size="15" maxlength="20"/>
-            </div>
-            <br/>
+<div class="content">
+    <div class="content-register">
+        <div class="regForm">
+            <form th:action="@{/register}" method="post">
+                <h2>Account registration</h2>
+                <div>
+                    <input type="text" name="username" placeholder="Enter username" size="15" maxlength="20"/>
+                </div>
+                <div>
+                    <input type="password" name="password" placeholder="Enter password" size="15" maxlength="20"/>
+                </div>
+                <div>
+                    <input type="password" name="passwordRepeat" placeholder="Repeat password" size="15" maxlength="20"/>
+                </div>
+                <br/>
 
-            <input type="Submit" value="Register"/>
-        </form>
-        <span th:text="${regMessage}"></span>
-    </div>
-    <div class="regInfo">
-        <ul>
-            <li>Credentials must be 5-20 characters.</li>
-            <li>Username can only contain letters and numbers.</li>
-            <li>Passwords can only contain letters, numbers and symbols(!?&%@)</li>
-        </ul>
-    </div>
+                <input type="Submit" value="Register"/>
+            </form>
+            <span th:text="${regMessage}"></span>
+        </div>
+        <div class="regInfo">
+            <ul>
+                <li>Credentials must be 5-20 characters.</li>
+                <li>Username can only contain letters and numbers.</li>
+                <li>Passwords can only contain letters, numbers and symbols(!?&%@)</li>
+            </ul>
+        </div>
 
+    </div>
 </div>
+
 </body>
 </html>

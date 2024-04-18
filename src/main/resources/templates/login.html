@@ -22,7 +22,7 @@
         </div>
 
         <span class="toolbar-item" th:unless="${loggedIn}">
-            <a href="/cart">Shopping Cart</a>
+            <a href="/cart" th:text="${'ShoppingCart(' + cartQuant + ')'}"></a>
             <span>|</span>
             <a href="/login">Login</a>
             <span>|</span>
@@ -30,23 +30,25 @@
         </span>
 
         <span class="toolbar-item" th:if="${loggedIn}">
-            <a href="/cart">Shopping Cart</a>
+            <a href="/cart" th:text="${'ShoppingCart(' + cartQuant + ')'}"></a>
             <span>|</span>
             <a href="/logout">Logout</a>
         </span>
     </div>
     <hr/>
 </div>
-<div class="content-login">
-    <form th:action="@{/login}" method="post">
-        <h2>Account login</h2>
-        <input type="text" name="username" placeholder="Enter username" size="15" maxlength="20"/><br/>
+<div class="content">
+    <div class="content-login">
+        <form th:action="@{/login}" method="post">
+            <h2>Account login</h2>
+            <input type="text" name="username" placeholder="Enter username" size="15" maxlength="20"/><br/>
 
-        <input type="text" name="password" placeholder="Enter password" size="15" maxlength="20"/><br/>
-        <br/>
-        <input type="Submit" value="Sign in"/>
-    </form>
-    <span th:text="${loginMessage}"></span>
+            <input type="password" name="password" placeholder="Enter password" size="15" maxlength="20"/><br/>
+            <br/>
+            <input type="Submit" value="Sign in"/>&nbsp;<span th:text="${loginMessage}"></span>
+        </form><br/>
+        <a href="/register">Register account</a>
+    </div>
 </div>
 </body>
 </html>

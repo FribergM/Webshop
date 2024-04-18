@@ -14,9 +14,17 @@ public class ProductService{
     @Autowired
     ProductRepository productRepo;
 
-//    public Product queryProduct(String query){
-//
-//    }
+    public Long queryProduct(String query){
+        Optional<Product> product = productRepo.findByProductName(query);
+
+        if(product.isPresent()){
+            return product.get().getId();
+        }else{
+            return null;
+        }
+
+    }
+
     public void queryAndAddProductToModel(Long id, Model model){
         Optional<Product> product = productRepo.findById(id);
 

@@ -22,7 +22,7 @@
         </div>
 
         <span class="toolbar-item" th:unless="${loggedIn}">
-            <a href="/cart">Shopping Cart</a>
+            <a href="/cart" th:text="${'ShoppingCart(' + cartQuant + ')'}"></a>
             <span>|</span>
             <a href="/login">Login</a>
             <span>|</span>
@@ -30,26 +30,42 @@
         </span>
 
         <span class="toolbar-item" th:if="${loggedIn}">
-            <a href="/cart">Shopping Cart</a>
+            <a href="/cart" th:text="${'ShoppingCart(' + cartQuant + ')'}"></a>
             <span>|</span>
             <a href="/logout">Logout</a>
         </span>
     </div>
     <hr/>
 </div>
-<div class="content-productDetails">
-    <div th:if="${productFound}">
-        <h2 class="product-title" th:text="${product.getProductName()}"></h2>
-        <ul>
-            <li th:text="${'Price: $' + product.getPrice}"></li>
-            <li th:text="${'In stock: ' + product.getInStock}"></li>
-        </ul>
-    </div>
-    <div th:unless="${productFound}">
-        <h2 th:text="@{'No Product Found.'}"></h2>
-    </div>
+<div class="content">
+    <div class="content-productDetails">
+        <div th:unless="${productFound}">
+            <h2 class="page-title" th:text="@{'No Product Found.'}"></h2>
+        </div>
+        <div th:if="${productFound}">
+            <h2 class="page-title" th:text="${product.getProductName()}"></h2>
+            <ul>
+                <li th:text="${'Price: $' + product.getPrice}"></li>
 
+                <li th:if="${product.getStock > 0}" th:text="${'In stock: ' + product.getStock}"></li>
+                <li th:if="${product.getStock <= 0}" th:text="${'OUT OF STOCK'}"></li>
 
+            </ul>
+            <form class="quantity-form" th:action="${'/product/' + product.getId()}" method="post">
+                <div th:if="${product.getStock > 0}" >
+                    <input type="number" name="quantity" value="1" th:min="1" th:max="${product.getStock()}" required/>
+                    <button type="submit">Add to cart</button><br/>
+                </div>
+                <div th:unless="${product.getStock > 0}">
+                    <input type="number" name="quantity" th:min="1" th:max="${product.getStock()}" disabled/>
+                    <button type="submit" disabled>Add to cart</button><br/>
+                </div>
+            </form>
+            <p th:text="${orderPrompt}"></p>
+        </div>
+
+    </div>
 </div>
+
 </body>
 </html>

@@ -1,11 +1,17 @@
 package se.iths.friberg.webshop.db.entities;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -19,6 +25,8 @@ public class User{
     private String password;
     @Column(nullable = false)
     private String role;
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<Order> orders;
 
 
     public User(){
@@ -28,6 +36,15 @@ public class User{
         this.username = username;
         this.password = password;
         this.role = "USER";
+        this.orders = new HashSet<>();
+    }
+
+    public Long getId(){
+        return id;
+    }
+
+    public void setId(Long id){
+        this.id = id;
     }
 
     public String getUsername(){
@@ -52,5 +69,13 @@ public class User{
 
     public void setRole(String role){
         this.role = role;
+    }
+
+    public Set<Order> getOrders(){
+        return orders;
+    }
+
+    public void setOrders(Set<Order> orders){
+        this.orders = orders;
     }
 }

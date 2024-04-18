@@ -2,9 +2,15 @@ body{
     background-color:#33475b;
     color:lightgray;
 }
+input[type="number"]{
+    width: 40px;
+}
 .header a{
     color: lightgray;
     text-decoration: none;
+}
+.content a{
+    color: lightgray;
 }
 .toolbar{
     display:flex;
@@ -25,20 +31,54 @@ body{
 }
 .content-register{
     display:flex;
-    justify-content: left;
 }
 .regInfo{
     margin-top: 50px;
 }
+.content{
+    display:flex;
+    justify-content: left;
+    margin-left: 25px;
+}
 .catalog-lists a{
     color: lightgray;
     font-size: 20px;
-
     text-decoration: none;
 }
 .catalog-list-item{
     padding-bottom: 10px;
 }
-.product-title{
+.cart-item{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.product-info{
+    display:flex;
+    align-items: center;
+}
+.product-name{
+    margin-right: 10px;
+}
+.product-price{
+    word-spacing: 5px;
+    margin-right: 8px;
+    display:inline-block;
+}
+.price-and-buttons{
+    display: flex;
+    align-items: center;
+}
+.button-row button{
+
+}
+.cart-item button{
+    width: 18px;
+    height: 18px;
+}
+.button-remove{
+    margin-left: 15px;
+}
+.cart-empty{
     margin-left: 25px;
 }

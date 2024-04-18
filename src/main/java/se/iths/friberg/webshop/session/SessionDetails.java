@@ -3,18 +3,24 @@ package se.iths.friberg.webshop.session;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
 import se.iths.friberg.webshop.db.entities.User;
+import se.iths.friberg.webshop.dto.ShoppingCart;
 
 @Component
 @SessionScope
 public class SessionDetails{
 
     private User user;
-//    private ShoppingCart shoppingCart;
+    private ShoppingCart shoppingCart;
     private boolean isLoggedIn;
 
-    public void end(){
+    public SessionDetails(){
+        this.shoppingCart = new ShoppingCart();
+    }
+
+    public void userLogOut(){
         this.user = null;
-        this.isLoggedIn = false;
+        this.shoppingCart = new ShoppingCart();
+        setLoggedIn();
     }
 
     public User getUser(){
@@ -24,6 +30,14 @@ public class SessionDetails{
     public void setUser(User user){
         this.user = user;
         setLoggedIn();
+    }
+
+    public ShoppingCart getShoppingCart(){
+        return shoppingCart;
+    }
+
+    public void setShoppingCart(ShoppingCart shoppingCart){
+        this.shoppingCart = shoppingCart;
     }
 
     public boolean isLoggedIn(){

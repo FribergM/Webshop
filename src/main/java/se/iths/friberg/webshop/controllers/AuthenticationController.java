@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import se.iths.friberg.webshop.services.AuthenticationService;
+import se.iths.friberg.webshop.services.ModelService;
 import se.iths.friberg.webshop.session.SessionDetails;
 
 @Controller
@@ -16,11 +17,13 @@ public class AuthenticationController{
     AuthenticationService authService;
     @Autowired
     SessionDetails sessionDetails;
+    @Autowired
+    ModelService modelService;
 
     @GetMapping("/login")
     public String baseLoginPage(Model model){
-
         model.addAttribute("loggedIn", sessionDetails.isLoggedIn());
+        model.addAttribute("cartQuant", sessionDetails.getShoppingCart().getCartSize());
 
         if(sessionDetails.isLoggedIn()){
             return "redirect:/";
@@ -33,12 +36,11 @@ public class AuthenticationController{
     public String postLogin(@RequestParam String username,
                             @RequestParam String password,
                             Model model){
+        modelService.addHeaderAttributes(model);
 
         authService.validateLogin(username,password);
         sessionDetails.setLoggedIn();
 
-
-        model.addAttribute("loggedIn", sessionDetails.isLoggedIn());
         model.addAttribute("loginMessage", "Incorred username/password.");
 
         if(sessionDetails.isLoggedIn()){
@@ -50,7 +52,8 @@ public class AuthenticationController{
     }
     @GetMapping("/register")
     public String register(Model model){
-        model.addAttribute("loggedIn", sessionDetails.isLoggedIn());
+        modelService.addHeaderAttributes(model);
+
         return "register";
     }
     @PostMapping("/register")
@@ -58,9 +61,9 @@ public class AuthenticationController{
                                @RequestParam String password,
                                @RequestParam String passwordRepeat,
                                Model model){
+        modelService.addHeaderAttributes(model);
 
         String errorMessage = authService.validateRegistration(username, password, passwordRepeat);
-        model.addAttribute("loggedIn", sessionDetails.isLoggedIn());
         model.addAttribute("regMessage", errorMessage);
 
         if(errorMessage.isBlank()){
@@ -70,9 +73,10 @@ public class AuthenticationController{
         }
     }
     @GetMapping("/logout")
-    public String logout(){
+    public String logout(Model model){
+        modelService.addHeaderAttributes(model);
 
-        sessionDetails.end();
+        sessionDetails.userLogOut();
         return "redirect:/";
     }
 }
