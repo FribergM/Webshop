@@ -3,17 +3,17 @@ package se.iths.friberg.webshop.session;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
 import se.iths.friberg.webshop.db.entities.User;
-import se.iths.friberg.webshop.dto.ShoppingCart;
+import se.iths.friberg.webshop.models.ShoppingCart;
 
 @Component
 @SessionScope
-public class SessionDetails{
+public class SessionManager{
 
     private User user;
     private ShoppingCart shoppingCart;
     private boolean isLoggedIn;
 
-    public SessionDetails(){
+    public SessionManager(){
         this.shoppingCart = new ShoppingCart();
     }
 
@@ -21,6 +21,18 @@ public class SessionDetails{
         this.user = null;
         this.shoppingCart = new ShoppingCart();
         setLoggedIn();
+    }
+
+    public boolean userAdminStatus(){
+        if(user == null){
+            return false;
+        }else {
+            return user.getRole().equals("ADMIN");
+        }
+    }
+
+    public void clearShoppingCart(){
+        this.shoppingCart = new ShoppingCart();
     }
 
     public User getUser(){

@@ -15,27 +15,28 @@ import se.iths.friberg.webshop.db.repositories.ProductRepository;
 import se.iths.friberg.webshop.services.ModelService;
 import se.iths.friberg.webshop.services.ProductService;
 import se.iths.friberg.webshop.services.ShoppingCartService;
-import se.iths.friberg.webshop.session.SessionDetails;
 
 import java.util.List;
 
 @Controller
 public class CatalogController{
 
-    @Autowired
-    SessionDetails sessionDetails;
-    @Autowired
-    CategoryRepository categoryRepo;
-    @Autowired
-    ProductRepository productRepo;
-    @Autowired
-    ProductService productService;
-    @Autowired
-    ModelService modelService;
-    @Autowired
-    ShoppingCartService cartService;
+    private final CategoryRepository categoryRepo;
+    private final ProductRepository productRepo;
+    private final ProductService productService;
+    private final ModelService modelService;
+    private final ShoppingCartService cartService;
 
-    //TODO THIS
+    @Autowired
+    public CatalogController(CategoryRepository categoryRepo,
+                             ProductRepository productRepo, ProductService productService,
+                             ModelService modelService, ShoppingCartService cartService){
+        this.categoryRepo = categoryRepo;
+        this.productRepo = productRepo;
+        this.productService = productService;
+        this.modelService = modelService;
+        this.cartService = cartService;
+    }
 
     @GetMapping(value = {"/","/categories"})
     public String homePage(Model model){
@@ -62,7 +63,7 @@ public class CatalogController{
         //TODO Improve this in the future with list of results with '.contains()'
         productService.queryAndAddProductToModel(productId, model);
 
-        return "productPage";
+        return "product-details";
     }
     @PostMapping("/product/{productId}")
     public String productPost(@RequestParam int quantity,
@@ -74,9 +75,9 @@ public class CatalogController{
         productService.queryAndAddProductToModel(productId, model);
 
 
-        String orderPrompt = cartService.addProductToCart(productId,quantity);
+        String orderPrompt = cartService.findAndAddToCart(productId,quantity);
         model.addAttribute("orderPrompt", orderPrompt);
-        return "productPage";
+        return "product-details";
     }
     @PostMapping("/search")
     public String productSearch(@RequestParam(value = "search") String query, Model model){

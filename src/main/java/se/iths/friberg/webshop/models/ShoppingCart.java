@@ -1,4 +1,4 @@
-package se.iths.friberg.webshop.dto;
+package se.iths.friberg.webshop.models;
 
 import java.util.ArrayList;
 import java.util.List;

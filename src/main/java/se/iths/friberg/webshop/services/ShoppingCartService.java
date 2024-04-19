@@ -4,9 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import se.iths.friberg.webshop.db.entities.Product;
 import se.iths.friberg.webshop.db.repositories.ProductRepository;
-import se.iths.friberg.webshop.dto.CartItem;
-import se.iths.friberg.webshop.dto.ShoppingCart;
-import se.iths.friberg.webshop.session.SessionDetails;
+import se.iths.friberg.webshop.models.CartItem;
+import se.iths.friberg.webshop.session.SessionManager;
 
 import java.util.List;
 import java.util.Optional;
@@ -14,17 +13,21 @@ import java.util.Optional;
 @Service
 public class ShoppingCartService{
 
-    @Autowired
-    ProductRepository productRepo;
-    @Autowired
-    SessionDetails sessionDetails;
+    private final ProductRepository productRepo;
+    private final SessionManager sessionManager;
 
-    public String addProductToCart(Long productId, int quantity){
+    @Autowired
+    public ShoppingCartService(ProductRepository productRepo, SessionManager sessionManager){
+        this.productRepo = productRepo;
+        this.sessionManager = sessionManager;
+    }
+
+    public String findAndAddToCart(Long productId, int quantity){
         Optional<Product> product = productRepo.findById(productId);
 
         if(product.isPresent()){
             CartItem cartItem = new CartItem(product.get(),quantity);
-            sessionDetails.getShoppingCart().addToCart(cartItem);
+            sessionManager.getShoppingCart().addToCart(cartItem);
 
             return quantity + "x " + product.get().getProductName() + " added to cart.";
         }else{
@@ -34,7 +37,7 @@ public class ShoppingCartService{
     }
 
     public void changeItemQuantity(String action, int itemIndex){
-        int quantity = sessionDetails.getShoppingCart().getItemQuantity(itemIndex);
+        int quantity = sessionManager.getShoppingCart().getItemQuantity(itemIndex);
 
         if(action.equals("increase")){
             quantity++;
@@ -43,20 +46,16 @@ public class ShoppingCartService{
         }
 
         if(quantity<1){
-            sessionDetails.getShoppingCart().removeFromCart(itemIndex);
+            sessionManager.getShoppingCart().removeFromCart(itemIndex);
         }else{
-            sessionDetails.getShoppingCart().changeItemQuantity(itemIndex,quantity);
+            sessionManager.getShoppingCart().changeItemQuantity(itemIndex,quantity);
         }
 
     }
 
-    public double calculatePrice(Product product, int quantity){
-        double totalPrice = product.getPrice() * quantity;
-        return (double) Math.round(totalPrice * 100) / 100;
-    }
     public double calculateTotalPrice(){
         double totalPrice = 0;
-        List<CartItem> cart = sessionDetails.getShoppingCart().getCartItems();
+        List<CartItem> cart = sessionManager.getShoppingCart().getCartItems();
         for(CartItem item : cart){
             totalPrice+= (item.getProductPrice()*item.getQuantity());
 

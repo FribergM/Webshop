@@ -4,22 +4,26 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import se.iths.friberg.webshop.db.entities.User;
 import se.iths.friberg.webshop.db.repositories.UserRepository;
-import se.iths.friberg.webshop.session.SessionDetails;
+import se.iths.friberg.webshop.session.SessionManager;
 
 @Service
 public class AuthenticationService{
 
+    private final UserRepository userRepo;
+    private final SessionManager sessionManager;
+
     @Autowired
-    UserRepository userRepo;
-    @Autowired
-    SessionDetails sessionDetails;
+    public AuthenticationService(UserRepository userRepo, SessionManager sessionManager){
+        this.userRepo = userRepo;
+        this.sessionManager = sessionManager;
+    }
 
     public void validateLogin(String username, String password){
         User user = userRepo.findByUsername(username);
 
         boolean isValidLogin = (user != null && user.getPassword().equals(password));
         if(isValidLogin){
-            sessionDetails.setUser(user);
+            sessionManager.setUser(user);
         }
     }
 
@@ -41,15 +45,17 @@ public class AuthenticationService{
 
         User newUser = new User(username,password);
         userRepo.save(newUser);
-        sessionDetails.setUser(newUser);
+        sessionManager.setUser(newUser);
         return "";
     }
     private boolean validateUsername(String username){
         return username.matches("^[a-zA-Z0-9]{5,20}$");
     }
+
     private boolean validatePassword(String password){
         return password.matches("^[a-zA-Z0-9!?&%@]{5,20}$");
     }
+
     private boolean verifyPassword(String password, String passwordRepeat){
         return password.equals(passwordRepeat);
     }

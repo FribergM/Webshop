@@ -8,24 +8,29 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import se.iths.friberg.webshop.services.AuthenticationService;
 import se.iths.friberg.webshop.services.ModelService;
-import se.iths.friberg.webshop.session.SessionDetails;
+import se.iths.friberg.webshop.session.SessionManager;
 
 @Controller
 public class AuthenticationController{
 
+    private final AuthenticationService authService;
+    private final SessionManager sessionManager;
+    private final ModelService modelService;
+
     @Autowired
-    AuthenticationService authService;
-    @Autowired
-    SessionDetails sessionDetails;
-    @Autowired
-    ModelService modelService;
+    public AuthenticationController(AuthenticationService authService, SessionManager sessionManager,
+                                    ModelService modelService){
+        this.authService = authService;
+        this.sessionManager = sessionManager;
+        this.modelService = modelService;
+    }
 
     @GetMapping("/login")
     public String baseLoginPage(Model model){
-        model.addAttribute("loggedIn", sessionDetails.isLoggedIn());
-        model.addAttribute("cartQuant", sessionDetails.getShoppingCart().getCartSize());
+        model.addAttribute("loggedIn", sessionManager.isLoggedIn());
+        model.addAttribute("cartQuant", sessionManager.getShoppingCart().getCartSize());
 
-        if(sessionDetails.isLoggedIn()){
+        if(sessionManager.isLoggedIn()){
             return "redirect:/";
         }else{
             return "/login";
@@ -39,11 +44,11 @@ public class AuthenticationController{
         modelService.addHeaderAttributes(model);
 
         authService.validateLogin(username,password);
-        sessionDetails.setLoggedIn();
+        sessionManager.setLoggedIn();
 
         model.addAttribute("loginMessage", "Incorred username/password.");
 
-        if(sessionDetails.isLoggedIn()){
+        if(sessionManager.isLoggedIn()){
             return "redirect:/";
         }else{
             return "/login";
@@ -76,7 +81,7 @@ public class AuthenticationController{
     public String logout(Model model){
         modelService.addHeaderAttributes(model);
 
-        sessionDetails.userLogOut();
+        sessionManager.userLogOut();
         return "redirect:/";
     }
 }

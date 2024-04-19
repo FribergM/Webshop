@@ -26,7 +26,7 @@ public class Order{
     private User user;
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<OrderItem> orderItems;
-    private boolean isShipped;
+    private boolean shipped;
 
     public Order(){
 
@@ -35,6 +35,7 @@ public class Order{
     public Order(User user){
         this.user = user;
         this.orderItems = new HashSet<>();
+        this.shipped = false;
     }
 
     public Long getId(){
@@ -62,10 +63,10 @@ public class Order{
     }
 
     public boolean isShipped(){
-        return isShipped;
+        return shipped;
     }
 
     public void setShipped(boolean shipped){
-        isShipped = shipped;
+        this.shipped = shipped;
     }
 }

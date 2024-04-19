@@ -30,6 +30,8 @@
         </span>
 
         <span class="toolbar-item" th:if="${loggedIn}">
+            <a th:if="${isAdmin}" href="/admin">Admin</a>
+            <span th:if="${isAdmin}">|</span>
             <a href="/cart" th:text="${'ShoppingCart(' + cartQuant + ')'}"></a>
             <span>|</span>
             <a href="/logout">Logout</a>
@@ -68,8 +70,11 @@
         <p th:if="${cartIsEmpty}" class="cart-empty">Cart is empty!</p>
         <div class="total-price-and-order">
             <span th:text="${'Total price: $' + totalPrice}"></span><br/>
-            <button th:if="${totalPrice > 0}" type="submit" name="placeOrder" th:value="true">Place order</button>
-            <button th:unless="${totalPrice > 0}" type="submit" name="placeOrder" th:value="true" disabled>Checkout</button>
+            <form th:action="@{/order}" method="get">
+                <button th:if="${totalPrice > 0}" type="submit">Checkout</button>
+                <button th:unless="${totalPrice > 0}" type="submit" disabled>Checkout</button>
+            </form>
+
         </div>
     </div>
 </div>

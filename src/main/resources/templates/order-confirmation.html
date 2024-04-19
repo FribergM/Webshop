@@ -30,6 +30,8 @@
         </span>
 
         <span class="toolbar-item" th:if="${loggedIn}">
+            <a th:if="${isAdmin}" href="/admin">Admin</a>
+            <span th:if="${isAdmin}">|</span>
             <a href="/cart" th:text="${'ShoppingCart(' + cartQuant + ')'}"></a>
             <span>|</span>
             <a href="/logout">Logout</a>
@@ -38,6 +40,19 @@
     <hr/>
 </div>
 <div class="content">
+    <div class="content-order-confirmation">
+        <h2 class="page-title">Thank you for your purchase!</h2>
+
+        <h3>Order details:</h3>
+        <ol>
+            <li th:each="item : ${cartItems}" th:text="${item.getProductName() + ' x ' + item.getQuantity() +
+        '&nbsp;$' + item.getCombinedPrice()}"></li>
+        </ol>
+        <br/>
+        <div>
+            <span th:text="${'Total price: $' + totalPrice}"></span>
+        </div>
+    </div>
 
 </div>
 

@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
     <link rel="stylesheet" href="/css/styles.css">
     <meta charset="UTF-8">
-    <title>Products</title>
+    <title>Admin - Add product</title>
 </head>
 <body>
 <div class="header">
@@ -40,16 +40,29 @@
     <hr/>
 </div>
 <div class="content">
-    <div class="content-products">
-        <h2 class="page-title">Products</h2>
-        <ul class="catalog-lists">
-            <li class="catalog-list-item" th:each="product : ${products}">
-                <a th:href="${'/product/' + product.getId()}"
-                   th:text="${product.getProductName() + ' - $' + product.getPrice()}"/>
-            </li>
-        </ul>
+    <div class="content-add-product">
+        <h2 class="page-title">Add Product</h2>
+        <form action="/admin/add-product" method="post">
+            <div>
+                <input type="text" placeholder="Product name" name="productName" required>
+            </div>
+            <div>
+                <input type="number" placeholder="Price" name="price" step=".01" min="0" pattern="\d+(\.\d{1,2})?"
+                       title="Enter a number with max of 2 decimal places" required>
+            </div>
+            <div>
+                <input type="number" placeholder="Stock amount" name="stock" min="0" required>
+            </div>
+            <div>
+                <select name="categoryId" required>
+                    <option value="" selected hidden disabled>Select Category</option>
+                    <option th:each="category : ${categories}" th:value="${category.getId()}" th:text="${category.getCategoryName()}"></option>
+                </select>
+            </div><br/>
+            <button type="submit">Add Product</button>
+        </form><br/>
+        <span th:text="${addPrompt}"></span>
     </div>
 </div>
-
 </body>
 </html>

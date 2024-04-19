@@ -1,4 +1,4 @@
-package se.iths.friberg.webshop.dto;
+package se.iths.friberg.webshop.models;
 
 import se.iths.friberg.webshop.db.entities.Product;
 

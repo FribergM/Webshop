@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="/css/styles.css">
+    <meta charset="UTF-8">
+    <title>Admin - Pending Orders</title>
+</head>
+<body>
+<div class="header">
+    <a href="/"><h2 style="text-align: center">Måns' Webshop!</h2></a>
+    <hr/>
+    <div class="toolbar">
+        <div class="toolbar-navigation">
+            <span>
+                <a href="/categories">Catalog</a>
+                <span>|</span>
+            </span>
+            <form class="toolbar-search" action="/search" method="post">
+                <input type="text" name="search" placeholder="Search" size="15" maxlength="20"/>
+                <button type="submit">Search</button>
+            </form>
+        </div>
+
+        <span class="toolbar-item" th:unless="${loggedIn}">
+            <a href="/cart" th:text="${'ShoppingCart(' + cartQuant + ')'}"></a>
+            <span>|</span>
+            <a href="/login">Login</a>
+            <span>|</span>
+            <a href="/register">Register</a>
+        </span>
+
+        <span class="toolbar-item" th:if="${loggedIn}">
+            <a th:if="${isAdmin}" href="/admin">Admin</a>
+            <span th:if="${isAdmin}">|</span>
+            <a href="/cart" th:text="${'ShoppingCart(' + cartQuant + ')'}"></a>
+            <span>|</span>
+            <a href="/logout">Logout</a>
+        </span>
+    </div>
+    <hr/>
+</div>
+<div class="content">
+    <div class="content-orders">
+        <h2 class="page-title">Pending orders</h2>
+<!--        <form action="/admin/orders/update" method="post">-->
+<!--            <table class="table-orders">-->
+<!--                <thead>-->
+<!--                <tr>-->
+<!--                    <th>Order ID</th>-->
+<!--                    <th th:each="item : ${orderItems}"></th>-->
+<!--                    <th>Shipped</th>-->
+<!--                </tr>-->
+<!--                </thead>-->
+<!--                <tbody>-->
+<!--                <tr th:each="order : ${orders}">-->
+<!--                    <td th:text="${order.getId()}"></td>-->
+<!--                    <td><input type="checkbox" name="orderId" th:value="${order.getId()}"></td>-->
+<!--                </tr>-->
+<!--                </tbody>-->
+<!--            </table>-->
+<!--            <br/>-->
+<!--            <button type="submit">Save changes</button>-->
+<!--        </form>-->
+
+        <form action="/admin/orders/update" method="post">
+            <table class="table-orders">
+                <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th class="table-product-names" style="width: 80px">Product</th>
+                    <th class="table-quantity">Quantity</th>
+                    <th>Shipped</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="order : ${orders}">
+                    <td class="table-order-id" th:text="${order.getId()}"></td>
+                    <td colspan="2">
+                        <table>
+                            <tr th:each="item : ${order.getOrderItems()}">
+                                <td class="table-product-names" th:text="${item.getProduct().getProductName()}"></td>
+                                <td class="table-quantity" th:text="${item.getQuantity()}"></td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td class="table-checkbox"><input type="checkbox" name="orderId" th:value="${order.getId()}"></td>
+                </tr>
+                </tbody>
+            </table>
+            <br/>
+            <button type="submit">Save changes</button>
+        </form>
+
+    </div>
+</div>
+</body>
+</html>
