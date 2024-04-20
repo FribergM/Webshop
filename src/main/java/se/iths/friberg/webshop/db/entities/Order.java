@@ -10,8 +10,12 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -56,6 +60,13 @@ public class Order{
 
     public Set<OrderItem> getOrderItems(){
         return orderItems;
+    }
+    public List<OrderItem> getOrderItemsAsList(){
+        List<OrderItem> orderItemList = new ArrayList<>(orderItems);
+
+        orderItemList.sort(Comparator.comparingLong(OrderItem::getId));
+
+        return orderItemList;
     }
 
     public void setOrderItems(Set<OrderItem> orderItems){

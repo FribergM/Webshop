@@ -10,7 +10,6 @@ public class WebshopApplication{
         SpringApplication.run(WebshopApplication.class, args);
 
         //TODO Checklist:
-        // - Show actual order details in admin order pages.
         // - VG Spring Security authentication with database (JPA) or sending Order confirmation email
 
         //TODO Fluff:

@@ -85,35 +85,53 @@ body{
 .cart-empty{
     margin-left: 25px;
 }
-.table-orders{
-    text-align: left;
-    border-collapse: collapse;
+
+.parent-table {
+    border: 1px solid lightgray;
+    padding: 0;
+    border-spacing: 0;
+    text-align: center;
+}
+.parent-table tr, .parent-table th, .parent-table table{
+    padding: 0;
+    border-spacing: 0;
+}
+.parent-table table{
+    width: 100%;
+}
+.parent-table th{
     border: 1px solid lightgray;
 }
-.table-orders td{
-
-}
-.table-orders th{
-
-}
-.table-orders tr{
+.nested-table td{
     border: 1px solid lightgray;
+}
+
+.table-order-id-header, .table-order-id{
+    width: 80px;
+}
+.table-product-name-header{
+    width: 120px;
+    text-align: center;
 }
 .table-product-names{
-    width: 80px;
-    max-width: 80px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-.table-quantity{
-    width: 70px;
     max-width: 70px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    text-align: left;
+    padding: 0 5px;
+}
+.table-product-names th{
     text-align: center;
 }
-.table-order-id, .table-checkbox{
-    text-align: center;
+.table-quantity-header, .table-quantity, .table-checkbox-header, .table-checkbox{
+    width: 80px;
+}
+.table-order{
+    padding: 0;
+    width: 80px;
+    max-width: 80px;
+}
+.table-order-id, .table-quantity, .table-checkbox{
+    padding: 0;
 }

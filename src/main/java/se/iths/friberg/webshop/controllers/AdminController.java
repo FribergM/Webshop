@@ -63,15 +63,16 @@ public class AdminController{
     }
 
     @PostMapping("/admin/orders/update")
-    public String managePendingOrders(@RequestParam("orderId") List<Long> orderIds,
+    public String managePendingOrders(@RequestParam(value = "orderId", required = false) List<Long> orderIds,
                                       Model model){
         if(!sessionManager.userAdminStatus()){
             return "redirect:/login";
         }
         modelService.addHeaderAttributes(model);
 
-        orderService.updateOrderStatus(orderIds);
-
+        if(orderIds != null){
+            orderService.updateOrderStatus(orderIds);
+        }
         return "redirect:/admin/orders/pending";
     }
 

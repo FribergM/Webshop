@@ -10,6 +10,8 @@ import se.iths.friberg.webshop.db.repositories.UserRepository;
 import se.iths.friberg.webshop.models.CartItem;
 import se.iths.friberg.webshop.session.SessionManager;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -41,11 +43,7 @@ public class OrderService{
         Order order = new Order(sessionManager.getUser());
 
         for(CartItem item : cartItems){
-            order.getOrderItems().add(new OrderItem(
-                    order,
-                    item.getProduct(),
-                    item.getQuantity())
-            );
+            order.getOrderItems().add(new OrderItem(order, item.getProduct(), item.getQuantity()));
             productService.decreaseStock(item.getProduct(),item.getQuantity());
         }
         return order;

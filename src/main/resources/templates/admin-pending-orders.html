@@ -42,55 +42,38 @@
 <div class="content">
     <div class="content-orders">
         <h2 class="page-title">Pending orders</h2>
-<!--        <form action="/admin/orders/update" method="post">-->
-<!--            <table class="table-orders">-->
-<!--                <thead>-->
-<!--                <tr>-->
-<!--                    <th>Order ID</th>-->
-<!--                    <th th:each="item : ${orderItems}"></th>-->
-<!--                    <th>Shipped</th>-->
-<!--                </tr>-->
-<!--                </thead>-->
-<!--                <tbody>-->
-<!--                <tr th:each="order : ${orders}">-->
-<!--                    <td th:text="${order.getId()}"></td>-->
-<!--                    <td><input type="checkbox" name="orderId" th:value="${order.getId()}"></td>-->
-<!--                </tr>-->
-<!--                </tbody>-->
-<!--            </table>-->
-<!--            <br/>-->
-<!--            <button type="submit">Save changes</button>-->
-<!--        </form>-->
-
         <form action="/admin/orders/update" method="post">
-            <table class="table-orders">
-                <thead>
+            <table class="parent-table">
+                <thead class="parent-table-header">
                 <tr>
-                    <th>Order ID</th>
-                    <th class="table-product-names" style="width: 80px">Product</th>
-                    <th class="table-quantity">Quantity</th>
-                    <th>Shipped</th>
+                    <th class="table-order-id-header">Order ID</th>
+                    <th class="table-product-name-header">Product</th>
+                    <th class="table-quantity-header">Quantity</th>
+                    <th class="table-checkbox-header">Shipped</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:each="order : ${orders}">
-                    <td class="table-order-id" th:text="${order.getId()}"></td>
-                    <td colspan="2">
-                        <table>
-                            <tr th:each="item : ${order.getOrderItems()}">
+                    <td class="table-order" colspan="4">
+                        <table class="nested-table">
+                            <tbody>
+                            <tr th:each="item,itemIndex : ${order.getOrderItemsAsList()}">
+                                <td th:if="${itemIndex.index==0}" class="table-order-id" th:text="${order.getId()}"></td>
+                                <td th:unless="${itemIndex.index==0}" class="table-order-id"></td>
                                 <td class="table-product-names" th:text="${item.getProduct().getProductName()}"></td>
                                 <td class="table-quantity" th:text="${item.getQuantity()}"></td>
+                                <td th:if="${itemIndex.index==0}" class="table-checkbox"><input type="checkbox" name="orderId" th:value="${order.getId()}"></td>
+                                <td th:unless="${itemIndex.index==0}" class="table-checkbox"></td>
                             </tr>
+                            </tbody>
                         </table>
                     </td>
-                    <td class="table-checkbox"><input type="checkbox" name="orderId" th:value="${order.getId()}"></td>
                 </tr>
                 </tbody>
             </table>
             <br/>
             <button type="submit">Save changes</button>
         </form>
-
     </div>
 </div>
 </body>
