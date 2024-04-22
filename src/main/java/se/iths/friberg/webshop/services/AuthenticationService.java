@@ -49,11 +49,11 @@ public class AuthenticationService{
         return "";
     }
     private boolean validateUsername(String username){
-        return username.matches("^[a-zA-Z0-9]{5,20}$");
+        return username.matches("^[a-zA-Z0-9._-]{5,20}$");
     }
 
     private boolean validatePassword(String password){
-        return password.matches("^[a-zA-Z0-9!?&%@]{5,20}$");
+        return password.matches("^[a-zA-Z0-9!?&%@._-]{5,20}$");
     }
 
     private boolean verifyPassword(String password, String passwordRepeat){
