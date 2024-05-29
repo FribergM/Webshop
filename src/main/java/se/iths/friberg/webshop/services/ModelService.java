@@ -19,5 +19,9 @@ public class ModelService{
         model.addAttribute("loggedIn", sessionManager.isLoggedIn());
         model.addAttribute("cartQuant", sessionManager.getShoppingCart().getCartSize());
         model.addAttribute("isAdmin", sessionManager.userAdminStatus());
+        if(sessionManager.isLoggedIn()){
+            model.addAttribute("username", sessionManager.getUser().getUsername());
+        }
+        
     }
 }

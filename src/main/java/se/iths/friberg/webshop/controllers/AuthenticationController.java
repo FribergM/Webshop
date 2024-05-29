@@ -1,11 +1,15 @@
 package se.iths.friberg.webshop.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import se.iths.friberg.webshop.models.MyUserDetails;
 import se.iths.friberg.webshop.services.AuthenticationService;
 import se.iths.friberg.webshop.services.ModelService;
 import se.iths.friberg.webshop.session.SessionManager;
@@ -25,42 +29,30 @@ public class AuthenticationController{
         this.modelService = modelService;
     }
 
-    @GetMapping("/login")
-    public String baseLoginPage(Model model){
-        model.addAttribute("loggedIn", sessionManager.isLoggedIn());
-        model.addAttribute("cartQuant", sessionManager.getShoppingCart().getCartSize());
-
-        if(sessionManager.isLoggedIn()){
-            return "redirect:/";
-        }else{
-            return "/login";
-        }
-
-    }
-    @PostMapping("/login")
-    public String postLogin(@RequestParam String username,
-                            @RequestParam String password,
-                            Model model){
+    @PostMapping("/login-handler")
+    public String loginHandler(Model model){
         modelService.addHeaderAttributes(model);
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
-        authService.validateLogin(username,password);
+        MyUserDetails userDetails = (MyUserDetails) auth.getPrincipal();
+
+        sessionManager.setUser(userDetails.getUser());
         sessionManager.setLoggedIn();
 
-        model.addAttribute("loginMessage", "Incorred username/password.");
-
         if(sessionManager.isLoggedIn()){
             return "redirect:/";
         }else{
             return "/login";
         }
-
     }
+    
     @GetMapping("/register")
     public String register(Model model){
         modelService.addHeaderAttributes(model);
 
         return "register";
     }
+    
     @PostMapping("/register")
     public String postRegister(@RequestParam String username,
                                @RequestParam String password,
@@ -77,11 +69,13 @@ public class AuthenticationController{
             return "/register";
         }
     }
-    @GetMapping("/logout")
-    public String logout(Model model){
+
+    @GetMapping("/logout-handler")
+    public String logoutHandler(Model model){
         modelService.addHeaderAttributes(model);
 
         sessionManager.userLogOut();
         return "redirect:/";
     }
+    
 }

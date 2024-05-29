@@ -1,6 +1,7 @@
 package se.iths.friberg.webshop.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import se.iths.friberg.webshop.db.entities.User;
 import se.iths.friberg.webshop.db.repositories.UserRepository;
@@ -11,11 +12,13 @@ public class AuthenticationService{
 
     private final UserRepository userRepo;
     private final SessionManager sessionManager;
+    private PasswordEncoder encoder;
 
     @Autowired
-    public AuthenticationService(UserRepository userRepo, SessionManager sessionManager){
+    public AuthenticationService(UserRepository userRepo, SessionManager sessionManager, PasswordEncoder encoder){
         this.userRepo = userRepo;
         this.sessionManager = sessionManager;
+        this.encoder = encoder;
     }
 
     public void validateLogin(String username, String password){
@@ -43,7 +46,7 @@ public class AuthenticationService{
             return "Passwords do not match";
         }
 
-        User newUser = new User(username,password);
+        User newUser = new User(username, encoder.encode(password));
         userRepo.save(newUser);
         sessionManager.setUser(newUser);
         return "";

@@ -11,6 +11,17 @@ body{
     justify-content: left;
     margin-left: 25px;
 }
+.header-center{
+    text-align: center;
+
+}
+.header-center h2{
+    margin-bottom: 0;
+}
+.header-right{
+    text-align: right;
+    margin-right: 20px;
+}
 .page-title{
 
 }

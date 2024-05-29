@@ -7,7 +7,17 @@
 </head>
 <body>
 <div class="header">
-    <a href="/"><h2 style="text-align: center">Måns' Webshop!</h2></a>
+    <div class="header-content">
+        <div class="header-center">
+            <a href="/">
+                <h2>Måns' Webshop!</h2>
+            </a>
+        </div>
+        <div class="header-right">
+            <span class="logged-in-as" th:if="${loggedIn}" th:text="'Logged in as: ' + ${username}"></span>
+            <span class="logged-in-as" th:unless="${loggedIn}">&nbsp</span>
+        </div>
+    </div>
     <hr/>
     <div class="toolbar">
         <div class="toolbar-navigation">
