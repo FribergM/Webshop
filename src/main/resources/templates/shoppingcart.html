@@ -25,7 +25,7 @@
                 <a href="/categories">Catalog</a>
                 <span>|</span>
             </span>
-            <form class="toolbar-search" action="/search" method="post">
+            <form class="toolbar-search" th:action="@{/search}" th:method="post">
                 <input type="text" name="search" placeholder="Search" size="15" maxlength="20"/>
                 <button type="submit">Search</button>
             </form>
@@ -54,7 +54,7 @@
         <h2 class="page-title">Shopping cart</h2>
         <ul th:unless="${cartIsEmpty}">
             <li th:each="item,itemIndex : ${cartItems}">
-                <form th:action="@{/changeQuantity}" method="post">
+                <form th:action="@{/changeQuantity}" th:method="post">
                     <input type="hidden" name="itemId" th:value="${itemIndex.index}">
                     <div class="cart-item">
                         <div class="product-name">
@@ -80,7 +80,7 @@
         <p th:if="${cartIsEmpty}" class="cart-empty">Cart is empty!</p>
         <div class="total-price-and-order">
             <span th:text="${'Total price: $' + totalPrice}"></span><br/>
-            <form th:action="@{/order}" method="get">
+            <form th:action="@{/order}" th:method="get">
                 <button th:if="${totalPrice > 0}" type="submit">Checkout</button>
                 <button th:unless="${totalPrice > 0}" type="submit" disabled>Checkout</button>
             </form>

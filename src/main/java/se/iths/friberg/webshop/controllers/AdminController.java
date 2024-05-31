@@ -1,7 +1,6 @@
 package se.iths.friberg.webshop.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,7 +12,7 @@ import se.iths.friberg.webshop.services.ProductService;
 import se.iths.friberg.webshop.session.SessionManager;
 
 import java.util.List;
-//@PreAuthorize("hasRole('ADMIN')")
+
 @Controller
 public class AdminController{
 
@@ -33,9 +32,6 @@ public class AdminController{
     
     @GetMapping("/admin")
     public String adminPage(Model model){
-//        if(!sessionManager.userAdminStatus()){
-//            return "redirect:/login";
-//        }
         modelService.addHeaderAttributes(model);
 
         return "admin-menu";
@@ -43,9 +39,6 @@ public class AdminController{
 
     @GetMapping("/admin/orders/shipped")
     public String viewShippedOrders(Model model){
-//        if(!sessionManager.userAdminStatus()){
-//            return "redirect:/login";
-//        }
         modelService.addHeaderAttributes(model);
         model.addAttribute("orders",orderService.getShippedOrders());
 
@@ -54,9 +47,6 @@ public class AdminController{
 
     @GetMapping("/admin/orders/pending")
     public String viewPendingOrders(Model model){
-//        if(!sessionManager.userAdminStatus()){
-//            return "redirect:/login";
-//        }
         modelService.addHeaderAttributes(model);
         model.addAttribute("orders",orderService.getPendingOrders());
 
@@ -66,9 +56,6 @@ public class AdminController{
     @PostMapping("/admin/orders/update")
     public String managePendingOrders(@RequestParam(value = "orderId", required = false) List<Long> orderIds,
                                       Model model){
-//        if(!sessionManager.userAdminStatus()){
-//            return "redirect:/login";
-//        }
         modelService.addHeaderAttributes(model);
 
         if(orderIds != null){
@@ -79,9 +66,6 @@ public class AdminController{
 
     @GetMapping("/admin/create-product")
     public String addProduct(Model model){
-//        if(!sessionManager.userAdminStatus()){
-//            return "redirect:/login";
-//        }
         modelService.addHeaderAttributes(model);
         model.addAttribute("categories", productService.getAllCategories());
         model.addAttribute("addPrompt","");
@@ -94,9 +78,6 @@ public class AdminController{
                                 @RequestParam double price,
                                 @RequestParam int stock,
                                 Model model){
-//        if(!sessionManager.userAdminStatus()){
-//            return "redirect:/login";
-//        }
         modelService.addHeaderAttributes(model);
 
         model.addAttribute("categories", productService.getAllCategories());

@@ -27,7 +27,7 @@ public class SessionManager{
         if(user == null){
             return false;
         }else {
-            return user.getRole().equals("ADMIN");
+            return user.getRole().equals("ROLE_ADMIN");
         }
     }
 

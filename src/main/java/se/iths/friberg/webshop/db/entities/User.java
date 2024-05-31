@@ -35,7 +35,7 @@ public class User{
     public User(String username, String password){
         this.username = username;
         this.password = password;
-        this.role = "USER";
+        this.role = "ROLE_USER";
         this.orders = new HashSet<>();
     }
 

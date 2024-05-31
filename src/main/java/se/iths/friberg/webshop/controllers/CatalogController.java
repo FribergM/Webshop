@@ -65,6 +65,7 @@ public class CatalogController{
 
         return "product-details";
     }
+    
     @PostMapping("/product/{productId}")
     public String productPost(@RequestParam int quantity,
                               @PathVariable Long productId,
@@ -79,6 +80,7 @@ public class CatalogController{
         model.addAttribute("orderPrompt", orderPrompt);
         return "product-details";
     }
+    
     @PostMapping("/search")
     public String productSearch(@RequestParam(value = "search") String query, Model model){
         modelService.addHeaderAttributes(model);

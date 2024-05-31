@@ -25,7 +25,7 @@
                 <a href="/categories">Catalog</a>
                 <span>|</span>
             </span>
-            <form class="toolbar-search" action="/search" method="post">
+            <form class="toolbar-search" th:action="@{/search}" th:method="post">
                 <input type="text" name="search" placeholder="Search" size="15" maxlength="20"/>
                 <button type="submit">Search</button>
             </form>
@@ -52,7 +52,7 @@
 <div class="content">
     <div class="content-register">
         <div class="regForm">
-            <form th:action="@{/register}" method="post">
+            <form th:action="@{/register}" th:method="post">
                 <h2>Account registration</h2>
                 <div>
                     <input type="text" name="username" placeholder="Enter username" size="15" maxlength="20"/>

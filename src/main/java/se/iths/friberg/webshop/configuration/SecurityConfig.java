@@ -7,7 +7,6 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import se.iths.friberg.webshop.services.JpaUserDetailsService;
@@ -28,12 +27,13 @@ public class SecurityConfig{
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
         return http
                 .authorizeHttpRequests(auth -> {
-                    auth.requestMatchers("/", "/css/**").permitAll();
+                    auth.requestMatchers("/","/index.html", "/css/**").permitAll();
                     auth.requestMatchers("/categories","/category/**").permitAll();
                     auth.requestMatchers("/products/**","/product/**").permitAll();
+                    auth.requestMatchers("/register","/search").permitAll();
                     auth.requestMatchers("/cart/**").hasAnyRole("USER", "ADMIN");
                     auth.requestMatchers("/admin/**").hasRole("ADMIN");
-                    auth.requestMatchers("/register").permitAll();
+                    
                     auth.anyRequest().authenticated();
                 })
                 .sessionManagement(session -> session
@@ -55,7 +55,7 @@ public class SecurityConfig{
     }
     
     @Bean
-    PasswordEncoder passwordEncoder(){
+    public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
     
